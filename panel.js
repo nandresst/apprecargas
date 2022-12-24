@@ -1,5 +1,5 @@
 
 
-function saludo(){
+saludo=()=>{
 alert("Bienvenido");
 }
