@@ -1,5 +1,0 @@
-
-
-saludo=()=>{
-alert("Bienvenido");
-}

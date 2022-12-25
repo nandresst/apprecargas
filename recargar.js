@@ -1,4 +1,0 @@
-probando=()=>{
-    
-    alert("probando");
-}
