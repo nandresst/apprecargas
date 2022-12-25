@@ -76,20 +76,24 @@
 
                             $reg2=mysqli_fetch_array($result2);
                         ?>                     
-                        <div class="card-header">
+                        
                             <div class="row">
-                                <div class="col-md-6">
-                                    <a class="btn btn-sm btn-light" href="clientes.php" > << </a>
-                                    <span style="font-weight:700;">     Recargas de Cliente:</span> 
-                                    <span><?php echo $reg["Apellidos"]?></span>
-                                    <span><?php echo $reg["Nombres"]?></span> 
+                                
+                                <div class="col-md-1" style="margin-top:12px">
+                                    <a class="btn btn-sm btn-warning" href="clientes.php" > << </a>
                                 </div>
-                                <div class="d-flex justify-content-end col-md-6">
+                                <div class="col-md-9">                                    
+                                    <span style="font-weight:700;"> <h4>Recargas de Cliente: </h4></span> 
+                                    <h6> <span><?php echo $reg["Apellidos"]?></span>
+                                        <span><?php echo $reg["Nombres"]?></span> 
+                                    </h6>
                                     <span class="badge bg-info text-dark" style="font-size:1rem; margin-right:10px;"><?php echo "Saldo: ".$reg2["saldo"] ?> </span>
-                                    <a class="btn btn-sm btn-dark" href="recargar.php?id=<?php// echo $reg['PlayerID'] ?>" >Recargar</a>                                                       
+                                </div>
+                                <div class="col-md-2"> 
+                                    <a class="btn btn-sm btn-dark" href="recargar.php?id=<?php echo $reg['PlayerID'] ?>&idr=0&o=l" >Recargar</a>                                                       
                                 </div>
                             </div>
-                        </div>
+                        
                         
                         <?php
                        }
@@ -126,6 +130,7 @@
                                     <td><?php echo $fila["CodigoVoucher"] ?> </td>
                                     <td><?php echo $fila["FechaHoraVoucher"] ?> </td>
                                     <td><?php echo $fila["Observacion"] ?> </td>
+                                    <td><a href="recargar.php?id=<?php echo $PlayerID ?>&idr=<?php echo $fila["RecargaID"] ?>&o=l">ver</a> </td>
                                 </tr>
                             <?php
                             }

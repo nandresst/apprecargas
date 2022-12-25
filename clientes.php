@@ -46,7 +46,10 @@
 
                 <div class="card shadow-sm">
                     <div class="card-header">
-                        <span style="font-weight:700;">Clientes</span>        
+                        
+                            <span style="font-weight:700;"><h4>Clientes</h4></span>        
+                            <h6>Registrados</h6>
+                        
                     </div>
                     <div class="card-body">
                         <table class="table table-sm">
@@ -66,7 +69,7 @@
                                 <td><?php echo $fila["Nombres"] ?> </td>
                                 <td><?php echo $fila["Apellidos"] ?> </td>
                                 <td><?php echo $fila["Dni"] ?> </td>
-                                <td><a href="recargar.php?id=<?php echo $fila['PlayerID'] ?>" >Recargar</a></td>
+                                <td><a href="recargar.php?id=<?php echo $fila['PlayerID'] ?>&idr=0&o=c" >Recargar</a></td>
                                 <td><a href="listarecargas.php?id=<?php echo $fila['PlayerID'] ?>" >Movimientos</a></td>
 
                             </tr>
