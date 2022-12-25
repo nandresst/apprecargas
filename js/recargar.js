@@ -24,7 +24,14 @@ validarsaldorecarga=()=>{
 
    if(sum==2)
    {
-     document.frmrecarga.submit();
-   } 
-    
+
+        if(document.getElementById("txtrecargaid").value!=0 && document.getElementById("txtoperadortipo").value=="Operador")
+        {
+            alert("Solo el Supervisor puede realizar la actualizacion.")
+        }
+        else{
+            document.frmrecarga.submit();
+        }           
+   }     
 }
+

@@ -26,3 +26,9 @@ ValidarLogin=()=>{
     }
     
 }
+
+CerrarSesion=()=>{
+
+    window.location='actions/salir.php';
+
+}

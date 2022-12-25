@@ -21,6 +21,7 @@ if($OperadorID==0)
     ?>
     <script>
         alert("Mensaje: <?php echo $reg["Mensaje"] ?> ");
+        window.location="../login.html";
     </script>
     <?php
 }

@@ -1,17 +1,15 @@
 
 <?php
 
-if(isset($_GET["id"]))
+if(isset($_GET["idr"]))
 {   
     include("conexion/conexion.php");    
-    $con = conectar();
-    $PlayerID = $_GET["id"];
-    $result=mysqli_query($con,"select * from tb_cliente_ns where PlayerID=$PlayerID");
-    $reg=mysqli_fetch_array($result);
+    $con = conectar();    
     
     session_start(); 
 
     $RecargaID = $_GET["idr"];
+
     if($RecargaID==0)
     {
         $recarga = array(
@@ -28,6 +26,7 @@ if(isset($_GET["id"]))
             "Medio"=>"0",
             "MedioInfo"=>""
         );
+        $PlayerID=$_GET["id"];
     }
     else{
         $sqlr ="SELECT * FROM tb_recarga_ns WHERE RecargaID=$RecargaID";
@@ -48,11 +47,28 @@ if(isset($_GET["id"]))
             "Medio"=>$regi["Medio"],
             "MedioInfo"=>$regi["MedioInfo"]
         );
+
+        $PlayerID = $recarga["PlayerID"];
         
     }
 
  
 
+    if($PlayerID==0)
+    {    
+        $nombres="";
+        $apellidos="";
+    }
+    else{
+       
+        $result=mysqli_query($con,"select * from tb_cliente_ns where PlayerID=$PlayerID");
+        $reg=mysqli_fetch_array($result);
+        
+        $nombres=$reg["Nombres"];
+        $apellidos=$reg["Apellidos"];
+    }
+
+    //para retornar dependiendo si origen es lista de cliente o lista general
     if(isset($_GET["o"]))
     {
         $origen = $_GET["o"];
@@ -61,9 +77,13 @@ if(isset($_GET["id"]))
         { 
             $volver = 'href="clientes.php"'; 
         } 
-        else 
+        else if($origen=='lc')
         { 
             $volver = 'href="listarecargas.php?id='.$PlayerID.'"'; 
+        }
+        else if($origen=='l')
+        {
+            $volver = 'href="listarecargas.php"';
         }
     }
     
@@ -93,14 +113,16 @@ if(isset($_GET["id"]))
                     <a class="nav-link text-light" href="clientes.php">Clientes</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link text-light" href="listarecargas.php">Movimientos</a>
+                    <a class="nav-link text-light" href="listarecargas.php">Lista de Recargas</a>
                     </li>                
                 </ul>
                 </div>
                 <p class="text-info" style="font-weight:700"><?php echo $_SESSION["Tipo"] .": " ?></p>
                 <p class="text-info" style=""><?php echo " - ".$_SESSION["Apellidos"].", ".$_SESSION["Nombres"] ?></p>
-            </div>
+                <p class="text-danger"><a style="text-decoration:none; cursor: pointer;" onclick="CerrarSesion()"> (Cerrar Sesión)</a></p>
+            </div>                       
         </nav>
+        
 
     <div class="container">
         <br>
@@ -109,15 +131,16 @@ if(isset($_GET["id"]))
                 <div class="card-header">
                     <a class="btn btn-sm btn-warning" <?php echo $volver ?> > << </a>    
                     <span style="font-weight:700;">Cliente:</span> 
-                    <span><?php echo $reg["Apellidos"]?></span>
-                    <span><?php echo $reg["Nombres"]?></span>
+                    <span><?php echo $apellidos ?></span>
+                    <span><?php echo $nombres ?></span>
                     
                 </div>
                 <div class="card-body">
                     
-                        <form action="actions/agregar_saldo.php" method="post" name="frmrecarga">   
+                        <form action="actions/acciones_recarga.php" method="post" name="frmrecarga">   
                         <br>                        
                         <span style="font-weight:700;">Datos de Recarga:</span> 
+                        <input type="text" name="txtrecargaid" id="txtrecargaid" value="<?php echo $RecargaID ?>" hidden>
                         <br> 
                         <br> 
                             <div class="row mb-3">
@@ -178,7 +201,15 @@ if(isset($_GET["id"]))
                             </div>
                             
                             <div class="">
-                                <a onClick="validarsaldorecarga();" class="btn btn-sm btn-dark" >Registrar Recarga</a>
+                            <input type="text" name="txtoperadortipo" id="txtoperadortipo" value="<?php echo $_SESSION["Tipo"] ?>" hidden>
+                                <a onClick="validarsaldorecarga();" class="btn btn-sm btn-dark" >                               
+                                    <?php 
+                                        if($RecargaID==0)
+                                        {echo "Registrar Recarga";}
+                                        else
+                                        {echo "Actualizar Datos"; }
+                                    ?>
+                                </a>
                             </div>
                             <input type="text" hidden value="<?php echo $PlayerID ?>" name="txtplayerid" id="txtplayerid">
                         </form>
@@ -193,6 +224,7 @@ if(isset($_GET["id"]))
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="js/recargar.js"></script>
+<script src="js/login.js"></script>
 </html>
 <?php
 }

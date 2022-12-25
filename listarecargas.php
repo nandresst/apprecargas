@@ -45,12 +45,13 @@
                     <a class="nav-link text-light" href="clientes.php">Clientes</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link text-light" href="listarecargas.php">Movimientos</a>
+                    <a class="nav-link text-light" href="listarecargas.php">Lista de Recargas</a>
                     </li>                
                 </ul>
                 </div>
                 <p class="text-info" style="font-weight:700"><?php echo $_SESSION["Tipo"] .": " ?></p>
                 <p class="text-info" style=""><?php echo " - ".$_SESSION["Apellidos"].", ".$_SESSION["Nombres"] ?></p>
+                <p class="text-danger"><a style="text-decoration:none; cursor: pointer;" onclick="CerrarSesion()"> (Cerrar Sesión)</a></p>
             </div>
         </nav>
 
@@ -83,14 +84,14 @@
                                     <a class="btn btn-sm btn-warning" href="clientes.php" > << </a>
                                 </div>
                                 <div class="col-md-9">                                    
-                                    <span style="font-weight:700;"> <h4>Recargas de Cliente: </h4></span> 
+                                    <span style="font-weight:700;"> <h4>Recargas del Cliente: </h4></span> 
                                     <h6> <span><?php echo $reg["Apellidos"]?></span>
                                         <span><?php echo $reg["Nombres"]?></span> 
                                     </h6>
                                     <span class="badge bg-info text-dark" style="font-size:1rem; margin-right:10px;"><?php echo "Saldo: ".$reg2["saldo"] ?> </span>
                                 </div>
                                 <div class="col-md-2"> 
-                                    <a class="btn btn-sm btn-dark" href="recargar.php?id=<?php echo $reg['PlayerID'] ?>&idr=0&o=l" >Recargar</a>                                                       
+                                    <a class="btn btn-sm btn-dark" href="recargar.php?id=<?php echo $reg['PlayerID'] ?>&idr=0&o=lc" >Recargar</a>                                                       
                                 </div>
                             </div>
                         
@@ -113,6 +114,7 @@
                                     <th>Dni</th>
                                     <th>Nro OP. Voucher</th>
                                     <th>Código Voucher</th>
+                                    <th>Monto</th>
                                     <th>Fecha y Hora</th>
                                     <th>Observación</th>
                                     <th></th>        
@@ -128,9 +130,23 @@
                                     <td><?php echo $fila["Dni"] ?> </td>
                                     <td><?php echo $fila["NroOperacionVoucher"] ?> </td>
                                     <td><?php echo $fila["CodigoVoucher"] ?> </td>
+                                    <td><?php echo $fila["MontoVoucher"] ?> </td>
                                     <td><?php echo $fila["FechaHoraVoucher"] ?> </td>
                                     <td><?php echo $fila["Observacion"] ?> </td>
-                                    <td><a href="recargar.php?id=<?php echo $PlayerID ?>&idr=<?php echo $fila["RecargaID"] ?>&o=l">ver</a> </td>
+                                    <?php
+                                    if(isset($_GET["id"]))
+                                    {
+                                    ?>
+                                        <td><a href="recargar.php?idr=<?php echo $fila["RecargaID"] ?>&o=lc">ver</a> </td>
+                                    <?php
+                                    }
+                                    else{
+                                    ?>
+                                        <td><a href="recargar.php?idr=<?php echo $fila["RecargaID"] ?>&o=l">ver</a> </td>
+                                    <?php
+                                    }
+                                    ?>
+                                
                                 </tr>
                             <?php
                             }
@@ -146,6 +162,5 @@
 </body>
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-<script src="js/panel.js"></script>
-
+<script src="js/login.js"></script>
 </html>
